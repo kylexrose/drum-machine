@@ -8,17 +8,31 @@
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-    <div class="tip">
-        (Click anywhere to hear sound...)
-    </div>
-
-    <div class="metronome">
-        <div class="background-left"></div>
-        <div class="background-center">
-            <div class="core"></div>
+    <div id="instruments">
+        <div class="instrument" id="metronome">
+            <img src="https://data.silhouette-ac.com/data/thumbnails/be/be6eb701c5a7ee6e2814c3e3b9c37b05_t.jpeg"/>
+            <input type="checkbox" id="metCheck" checked="true">
+            <label for="metBeats">Input on which beats will play</label>
+            <input type="text" id="metBeats">
         </div>
-        <div class="background-right"></div>
-        <div class="arm"></div>
+        <div class="instrument" id="hihat">
+            <img src="https://thumbs.dreamstime.com/b/brown-hi-hat-stand-vector-color-illustration-hi-hat-brown-colored-musical-instrument-two-cymbals-mounted-metal-160152979.jpg"/>
+            <input type="checkbox" id="hihatCheck">
+            <label for="hihatBeats">Input on which beats will play</label>
+            <input type="text" id="hihatBeats">
+        </div>
+        <div class="instrument" id="snare">
+            <img src="https://thumbs.dreamstime.com/b/drum-silhouette-cartoon-icon-symbol-design-isolated-white-background-154063771.jpg"/>
+            <input type="checkbox" id="snareCheck">
+            <label for="snareBeats">Input on which beats will play</label>
+            <input type="text" id="snareBeats">
+        </div>
+        <div class="instrument" id="kick">
+            <img src="https://icon-library.com/images/drum-icon/drum-icon-11.jpg"/>
+            <input type="checkbox" id="kickCheck">
+            <label for="kickBeats">Input on which beats will play</label>
+            <input type="text" id="kickBeats">
+        </div>
     </div>
 
     <script src="main.js"></script>
