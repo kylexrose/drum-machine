@@ -8,6 +8,10 @@ const metCheck = document.querySelector("#metCheck");
 const hihatCheck = document.querySelector("#hihatCheck");
 const snareCheck = document.querySelector("#snareCheck");
 const kickCheck = document.querySelector("#kickCheck");
+const metBeats = document.querySelector("#metBeats");
+const hihatBeats = document.querySelector("#hihatBeats");
+const snareBeats = document.querySelector("#snareBeats");
+const kickBeats = document.querySelector("#kickBeats");
 
 let beatCount = 1
 const beatsPerMeasure = 4;
@@ -24,13 +28,14 @@ function update() {
         }
     }
     if(hihatCheck.checked){
-        hihat.play();
+        hihat.load();
+        checkBeat(hihatBeats.value.split(""), hihat)
     }
     if(snareCheck.checked){
-        snare.play();
+        checkBeat(snareBeats.value.split(""), snare)
     }
     if(kickCheck.checked){
-        kick.play();
+        checkBeat(kickBeats.value.split(""), kick)
     }
     if (beatCount !== beatsPerMeasure){
         beatCount++;
@@ -42,6 +47,13 @@ function update() {
 // This function sets up update() to be called every 600ms
 function setupUpdate() {
     setInterval(update, 600);
+}
+
+function checkBeat(instrumentBeats, audio){
+    console.log(instrumentBeats)
+    if(instrumentBeats.indexOf(beatCount.toString()) !== -1){
+        audio.play();
+    }
 }
 
 // Call setupUpdate() once after 300ms
