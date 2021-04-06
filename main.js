@@ -1,61 +1,95 @@
-// Setup 'tick' sound
-const tick = new Audio('sounds/tick.mp3');
-const hihat = new Audio('sounds/hi-hat.mp3');
-const kick = new Audio('sounds/kick-drum.mp3');
-const snare = new Audio('sounds/snare-drum.mp3');
-const tock = new Audio('sounds/tock.mp3');
-const metCheck = document.querySelector("#metCheck");
-const hihatCheck = document.querySelector("#hihatCheck");
-const snareCheck = document.querySelector("#snareCheck");
-const kickCheck = document.querySelector("#kickCheck");
-const metBeats = document.querySelector("#metBeats");
-const hihatBeats = document.querySelector("#hihatBeats");
-const snareBeats = document.querySelector("#snareBeats");
-const kickBeats = document.querySelector("#kickBeats");
+let stop = true;
 
-let beatCount = 1
-const beatsPerMeasure = 4;
+const bpm = document.querySelector("#speed");
+let speed = Math.floor(60 / bpm.value * 1000)
+bpm.addEventListener('change', () => {
+    stop = false;
+    stopOrStartLoop();
+    speed = Math.floor(60 / bpm.value * 1000);
+})
 
-// This function is called every 600ms
-function update() {
-    // Play the 'tick' sound
-    console.log(beatCount);
-    if(metCheck.checked){
-        if (beatCount !== beatsPerMeasure){
-            tick.play();
-        }else{
-            tock.play();
+const numOfBeats = document.querySelector("#beatsLooped");
+let beatsOnLoop = numOfBeats.value;
+numOfBeats.addEventListener('change', () => {
+    stop = false;
+    stopOrStartLoop();
+    beatsOnLoop = numOfBeats.value;
+    updatePage();
+})
+
+updatePage();
+
+
+
+const playButton = document.querySelector("#play")
+playButton.addEventListener('click', () => stopOrStartLoop())
+
+//functions ===============================================================
+
+function updatePage(){
+    document.querySelector("#instrumentInterface").innerHTML = "";
+    let table = `<thead><tr><th scope="col">Instrument</th><th scope="col">Select All`;
+    for(let i = 1; i <= beatsOnLoop; i++){
+        table += `<th scope="col">${i}</th>`
+        if(i === beatsOnLoop){
+            table += `</tr></thead>`
         }
     }
-    if(hihatCheck.checked){
-        hihat.load();
-        checkBeat(hihatBeats.value.split(""), hihat)
+    if(instruments.length){
+        table += `<tbody id="instrumentCheckboxes">`
     }
-    if(snareCheck.checked){
-        checkBeat(snareBeats.value.split(""), snare)
+    for (let i = 0; i < instruments.length; i++){
+        table += `<tr><th scope="row">${instruments[i].instrument}</th><td><input type="checkbox" class="${instruments[i].sound} selectAll">`;
+        for(let j = 1; j <= beatsOnLoop; j++){
+            table += `<td><input type="checkbox" class="${instruments[i].sound} beat beat${j}" id="${instruments[i].sound}Beat${j}"></td>`
+            if (j === beatsOnLoop){
+                table += `</tr>`;
+            }
+        }
+        if (i === instruments.length - 1){
+            table += `</tbody>`
+        }
     }
-    if(kickCheck.checked){
-        checkBeat(kickBeats.value.split(""), kick)
-    }
-    if (beatCount !== beatsPerMeasure){
+    document.querySelector("#instrumentInterface").innerHTML = table;
+    const selectAllBeats = document.querySelectorAll(".selectAll");
+    for(let instrument of selectAllBeats){
+        instrument.addEventListener('change', (e) => selectAll(e.target, instrument.classList[0]))
+}
+}
+
+function beatPlayback(){
+    let beatCount = 1;
+    const play = setInterval(() => {
+        console.log(beatCount)
+        stop ? clearInterval(play) : true;
+        let currentBeat = document.querySelectorAll(`.beat${beatCount}`);
+        for(let instrument of currentBeat){
+            if(instrument.checked){
+                eval(instrument.classList[0]).load()
+                eval(instrument.classList[0]).play()
+            }
+        }
         beatCount++;
-    }else{
-        beatCount = 1;
+        beatCount = (beatCount > beatsOnLoop) ? 1 : beatCount;
+    }, speed);
+}
+
+function selectAll(checkbox, instrument){
+    console.log("hello")
+    const allBoxes = document.querySelectorAll(`.${instrument}`);
+    for(let current of allBoxes){
+        current.checked = checkbox.checked;
     }
 }
 
-// This function sets up update() to be called every 600ms
-function setupUpdate() {
-    setInterval(update, 600);
-}
-
-function checkBeat(instrumentBeats, audio){
-    console.log(instrumentBeats)
-    if(instrumentBeats.indexOf(beatCount.toString()) !== -1){
-        audio.play();
+function stopOrStartLoop(){
+    if(stop){
+        stop = !stop;
+        playButton.innerHTML = "Stop";
+        beatPlayback();
+    }
+    else{
+        stop = !stop;
+        playButton.innerHTML = "Play";
     }
 }
-
-// Call setupUpdate() once after 300ms
-setTimeout(setupUpdate, 300);
- 
