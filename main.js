@@ -93,3 +93,13 @@ function stopOrStartLoop(){
         playButton.innerHTML = "Play";
     }
 }
+
+function clearAll(){
+    let all = document.querySelectorAll(".beat");
+    for (let beat of all){
+        beat.checked = false;
+    }
+    for (let box of document.querySelectorAll(".selectAll")){
+        box.checked = false;
+    }
+}
