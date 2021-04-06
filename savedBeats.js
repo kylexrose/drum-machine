@@ -49,6 +49,7 @@ function addLoop(){
 function recallSave(beatArray){
     clearAll();
     beatsOnLoop = beatArray[0];
+    numOfBeats.value = beatArray[0];
     updatePage();
     for(let beat of beatArray[1]){
         console.log(beat)
