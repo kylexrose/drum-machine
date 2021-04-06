@@ -53,7 +53,7 @@ const snare = new Audio('sounds/snare-drum.mp3');
 const hihatClosed = new Audio('sounds/hi-hat-closed.mp3');
 const hihatOpen = new Audio('sounds/hi-hat-open.mp3');
 const floorTom = new Audio('sounds/floor-tom.mp3');
-const medTom = new Audio('sound/medium-tom.mp3');
+const medTom = new Audio('sounds/medium-tom.mp3');
 const highTom = new Audio('sounds/small-tom.mp3');
 const ride = new Audio('sounds/ride-cymbal.mp3');
 
