@@ -1,9 +1,11 @@
 let saves = {
-            "Basic Beat": ["snareBeat3","snareBeat7", "hihatBeat1",
-                        "hihatBeat2", "hihatBeat3", "hihatBeat4", 
-                        "hihatBeat5", "hihatBeat6", "hihatBeat7", 
-                        "hihatBeat8", "kickBeat1", "kickBeat5"],
-            save2: ["kickBeat1", "hihatBeat1"]
+            "Basic Beat":   [8,["snareBeat3","snareBeat7", "hihatClosedBeat1",
+                            "hihatClosedBeat2", "hihatClosedBeat3", "hihatClosedBeat4", 
+                            "hihatClosedBeat5", "hihatClosedBeat6", "hihatClosedBeat7", 
+                            "hihatClosedBeat8", "kickBeat1", "kickBeat5"]],
+            "Techno-y Kinda?": [8,["snareBeat3", "snareBeat5", "hihatClosedBeat2", 
+                            "hihatClosedBeat4", "hihatClosedBeat6", "hihatClosedBeat8", "kickBeat1", 
+                            "kickBeat3", "kickBeat5", "kickBeat7"]]
             };
 
 populateSavedBeats();
@@ -20,7 +22,6 @@ saveList.addEventListener('change', () => {
 })
 
 function populateSavedBeats(){
-
     let savedBeats = `<option disabled selected value> -- Saved Loops -- </option>
     <option value="add">Add Loop</option>`;
     for (let key in saves){
@@ -41,13 +42,15 @@ function addLoop(){
             newSave.push(beat.id);
         }
     }
-    saves[saveName] = newSave;
+    saves[saveName] = [beatsOnLoop, newSave];
     populateSavedBeats();
 }
 
 function recallSave(beatArray){
     clearAll();
-    for(let beat of beatArray){
+    beatsOnLoop = beatArray[0];
+    updatePage();
+    for(let beat of beatArray[1]){
         console.log(beat)
         document.querySelector(`#${beat}`).checked = true;
     }

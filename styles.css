@@ -29,10 +29,8 @@ img{
     padding: 15px;
 }
 
-table{
-    size: 80% !important;
-}
-
-.beat{
-    padding: 20px !important;
+#buttons{
+    display: flex;
+    flex-direction: column;
+    width: 100px;
 }

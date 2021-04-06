@@ -1,11 +1,11 @@
 let stop = true;
 
 const bpm = document.querySelector("#speed");
-let speed = Math.floor(60 / bpm.value * 1000)
+let speed = Math.floor(60 / bpm.value * 500)
 bpm.addEventListener('change', () => {
     stop = false;
     stopOrStartLoop();
-    speed = Math.floor(60 / bpm.value * 1000);
+    speed = Math.floor(60 / bpm.value * 500);
 })
 
 const numOfBeats = document.querySelector("#beatsLooped");
@@ -16,6 +16,9 @@ numOfBeats.addEventListener('change', () => {
     beatsOnLoop = numOfBeats.value;
     updatePage();
 })
+
+document.querySelector("#clearAll").addEventListener('click', () => clearAll())
+
 
 updatePage();
 
@@ -75,7 +78,6 @@ function beatPlayback(){
 }
 
 function selectAll(checkbox, instrument){
-    console.log("hello")
     const allBoxes = document.querySelectorAll(`.${instrument}`);
     for(let current of allBoxes){
         current.checked = checkbox.checked;
