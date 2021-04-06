@@ -34,3 +34,15 @@ img{
     flex-direction: column;
     width: 100px;
 }
+
+#tableContainer{
+    display: inline-block;
+}
+
+#tracker{
+    background-color: red;
+    opacity: .5;
+    position: absolute;
+    width: 3px;
+    height: 75%;
+}

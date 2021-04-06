@@ -2,10 +2,12 @@ let stop = true;
 
 const bpm = document.querySelector("#speed");
 let speed = Math.floor(60 / bpm.value * 500)
+tracker.style.transition = `all ${speed}ms linear`
 bpm.addEventListener('change', () => {
     stop = false;
     stopOrStartLoop();
     speed = Math.floor(60 / bpm.value * 500);
+    tracker.style.transition = `all ${speed}ms linear`;
 })
 
 const numOfBeats = document.querySelector("#beatsLooped");
@@ -57,14 +59,18 @@ function updatePage(){
     const selectAllBeats = document.querySelectorAll(".selectAll");
     for(let instrument of selectAllBeats){
         instrument.addEventListener('change', (e) => selectAll(e.target, instrument.classList[0]))
-}
+    }
+    resetTracker();
 }
 
 function beatPlayback(){
     let beatCount = 1;
     const play = setInterval(() => {
         console.log(beatCount)
-        stop ? clearInterval(play) : true;
+        if(stop){
+            clearInterval(play)
+            return;
+        }
         let currentBeat = document.querySelectorAll(`.beat${beatCount}`);
         for(let instrument of currentBeat){
             if(instrument.checked){
@@ -74,6 +80,7 @@ function beatPlayback(){
         }
         beatCount++;
         beatCount = (beatCount > beatsOnLoop) ? 1 : beatCount;
+        updateTracker(beatCount);
     }, speed);
 }
 
@@ -93,6 +100,7 @@ function stopOrStartLoop(){
     else{
         stop = !stop;
         playButton.innerHTML = "Play";
+        resetTracker();
     }
 }
 
