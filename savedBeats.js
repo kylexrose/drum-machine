@@ -18,7 +18,7 @@ for(let listItem of saveList){
             addLoop();
         }else{
             recallSave(saves[listItem.innerText]);
-    }
+        }
     })
 }
 
@@ -28,6 +28,17 @@ function populateSavedBeats(){
         savedBeats += `<li><a class="dropdown-item">${key}</a></li>`
     }
     document.querySelector("#saved").innerHTML = savedBeats;
+    const saveList = document.querySelectorAll("#saved li");
+    for(let listItem of saveList){
+        listItem.addEventListener('click', () => {
+            console.log(listItem)
+            if(listItem.innerText == "Add Loop"){
+                addLoop();
+            }else{
+                recallSave(saves[listItem.innerText]);
+            }
+        })
+    }
 }
 
 function addLoop(){
@@ -43,7 +54,10 @@ function addLoop(){
         }
     }
     saves[saveName] = [beatsOnLoop, newSave];
-    populateSavedBeats();
+    let newList = document.createElement("li");
+    newList.innerHTML = `<a class="dropdown-item" id="${saveName}">${saveName}</a>`;
+    document.querySelector("#saved").appendChild(newList);
+    document.querySelector(`#${saveName}`).addEventListener('click', () => recallSave(saves[listItem.innerText]));
 }
 
 function recallSave(beatArray){
