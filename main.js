@@ -35,7 +35,7 @@ function updatePage(){
     document.querySelector("#instrumentInterface").innerHTML = "";
     let table = `<thead><tr><th class="cell" scope="col">Instrument</th><th class="cell" scope="col">Select All`;
     for(let i = 1; i <= beatsOnLoop; i++){
-        table += `<th class="cell" scope="col">${i}</th>`
+        table += `<th class="cell cell${i}" scope="col">${i}</th>`
         if(i === beatsOnLoop){
             table += `</tr></thead>`
         }
