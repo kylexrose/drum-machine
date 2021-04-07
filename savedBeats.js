@@ -10,22 +10,22 @@ let saves = {
 
 populateSavedBeats();
 
-const saveList = document.querySelector("#saved");
-saveList.addEventListener('change', () => {
-    if(saveList.value === "add"){
-        addLoop();
-        saveList.value = "";
-    }else{
-        recallSave(saves[saveList.value]);
-        saveList.value = "";
+const saveList = document.querySelectorAll("#saved li");
+for(let listItem of saveList){
+    listItem.addEventListener('click', () => {
+        console.log(listItem)
+        if(listItem.innerText == "Add Loop"){
+            addLoop();
+        }else{
+            recallSave(saves[listItem.innerText]);
     }
-})
+    })
+}
 
 function populateSavedBeats(){
-    let savedBeats = `<option disabled selected value> -- Saved Loops -- </option>
-    <option value="add">Add Loop</option>`;
+    let savedBeats = `<li><a class="dropdown-item">Add Loop</a></li>`;
     for (let key in saves){
-        savedBeats += `<option value="${key}">${key}</option>`
+        savedBeats += `<li><a class="dropdown-item">${key}</a></li>`
     }
     document.querySelector("#saved").innerHTML = savedBeats;
 }

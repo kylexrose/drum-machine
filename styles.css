@@ -5,21 +5,16 @@
 body {
     height: 100vh;
     display: flex;
-    align-items: center;
-    justify-content: center;
+
     margin: none;
     flex-direction: column;
-    background-color: #81b29a;
+    background-color: gainsboro;
 }
 
 #instruments{
     display: flex;
     justify-content: space-around;
     width: 80%;
-}
-
-img{
-    height: 200px;
 }
 
 .instrument{
@@ -29,14 +24,9 @@ img{
     padding: 15px;
 }
 
-#buttons{
-    display: flex;
-    flex-direction: column;
-    width: 100px;
-}
-
 #tableContainer{
     display: inline-block;
+    margin: 25px;
 }
 
 #tracker{
@@ -45,4 +35,17 @@ img{
     position: absolute;
     width: 3px;
     height: 75%;
+}
+
+#options{
+    padding: 20px;
+    background-color: slategray;
+}
+
+.table{
+    border: slategray;
+}
+
+.cell{
+    text-align: center;
 }

@@ -2,12 +2,12 @@ let stop = true;
 
 const bpm = document.querySelector("#speed");
 let speed = Math.floor(60 / bpm.value * 500)
-tracker.style.transition = `all ${speed}ms linear`
+tracker.style.transition = `left ${speed}ms linear`
 bpm.addEventListener('change', () => {
     stop = false;
     stopOrStartLoop();
     speed = Math.floor(60 / bpm.value * 500);
-    tracker.style.transition = `all ${speed}ms linear`;
+    tracker.style.transition = `left ${speed}ms linear`;
 })
 
 const numOfBeats = document.querySelector("#beatsLooped");
@@ -33,9 +33,9 @@ playButton.addEventListener('click', () => stopOrStartLoop())
 
 function updatePage(){
     document.querySelector("#instrumentInterface").innerHTML = "";
-    let table = `<thead><tr><th scope="col">Instrument</th><th scope="col">Select All`;
+    let table = `<thead><tr><th class="cell" scope="col">Instrument</th><th class="cell" scope="col">Select All`;
     for(let i = 1; i <= beatsOnLoop; i++){
-        table += `<th scope="col">${i}</th>`
+        table += `<th class="cell" scope="col">${i}</th>`
         if(i === beatsOnLoop){
             table += `</tr></thead>`
         }
@@ -44,9 +44,9 @@ function updatePage(){
         table += `<tbody id="instrumentCheckboxes">`
     }
     for (let i = 0; i < instruments.length; i++){
-        table += `<tr><th scope="row">${instruments[i].instrument}</th><td><input type="checkbox" class="${instruments[i].sound} selectAll">`;
+        table += `<tr class="cell"><th scope="row" class="cell">${instruments[i].instrument}</th><td class="cell"><input type="checkbox" class="${instruments[i].sound} selectAll form-check-input"></td>`;
         for(let j = 1; j <= beatsOnLoop; j++){
-            table += `<td><input type="checkbox" class="${instruments[i].sound} beat beat${j}" id="${instruments[i].sound}Beat${j}"></td>`
+            table += `<td class="cell"><input type="checkbox" class="${instruments[i].sound} beat beat${j} form-check-input" id="${instruments[i].sound}Beat${j}"></td>`
             if (j === beatsOnLoop){
                 table += `</tr>`;
             }
@@ -79,7 +79,9 @@ function beatPlayback(){
             }
         }
         beatCount++;
-        beatCount = (beatCount > beatsOnLoop) ? 1 : beatCount;
+        if(beatCount > beatsOnLoop){
+            beatCount = 1;
+        }
         updateTracker(beatCount);
     }, speed);
 }
